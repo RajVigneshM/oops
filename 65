@@ -1,0 +1,76 @@
+65. Create three Classes: Storage, Counter and Printer. The Storage class should store an integer. 
+The Counter class should create a thread that starts from counting from 0(0, 1, 2, 3....) and stores 
+each value in the Storage class. The Printer class should create a thread that keeps reading the 
+value in the Storage class and printing it. Create a Java program that create an instance of the 
+Storage class, and sets up a Counter and a Printer object to operate on it. Modify the program to 
+ensure that each number is printed exactly once, by adding suitable synchronization
+Code:
+class Storage{
+ int i=0;
+ boolean value=false;
+ public synchronized void add(int i) throws InterruptedException {
+ this.i=i;
+ this.value=true;
+ }
+ public synchronized int display() throws InterruptedException {
+ this.value=false;
+ return i;
+ }
+}
+class Counter extends Thread{
+ Storage s;
+ Counter(){}
+ Counter(Storage s){this.s=s;}
+ public void run() {
+ for(int i=0 ;i<10;i++) {
+ try {
+ synchronized(s) {
+ while(s.value==true) {
+ s.wait();
+ }
+s.add(i);
+System.out.println("Added: "+i);
+s.notifyAll();
+ }
+ } catch (InterruptedException e) {
+ // TODO Auto-generated catch block
+ e.printStackTrace();
+ }
+ }
+ }
+}
+class Printer extends Thread{
+ Storage s;
+ Printer(){}
+ Printer(Storage s){this.s=s;}
+ public void run() {
+ for(int i=0 ;i<10;i++) {
+ try {
+ synchronized(s) {
+ while(s.value==false) {
+ s.wait();
+ }
+System.out.println("Print: "+s.display());
+ s.notifyAll();
+ }
+ } catch (InterruptedException e) {
+ // TODO Auto-generated catch block
+ e.printStackTrace();
+ }
+ }
+ }
+}
+public class qn65{
+ public static void main(String arg[]) {
+ Storage s1= new Storage();
+ Counter c= new Counter(s1);
+ Printer p = new Printer(s1);
+ try {
+ c.start();
+ p.start();
+ }
+ catch(Exception E) {
+ System.out.println(E);
+ }
+ }
+}
