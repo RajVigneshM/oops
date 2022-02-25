@@ -1,0 +1,65 @@
+69. Write a Java Program to read a file which contains numbers and find the minimum and 
+maximum. 
+Sample Input: 
+data1.txt 
+Sample Output: 
+min = 1 
+max = 1 
+Sample Input: (If it is empty file) 
+data2.txt 
+Sample Output: 
+Empty array 
+min undefined 
+max undefined
+Code:
+import java.io.*;
+import java.util.*;
+class SortedList{
+ ArrayList <Integer> array = null;
+ SortedList(){
+ array = new ArrayList<Integer>();
+ }
+ public void add(int u ){
+ array.add(u);
+ Collections.sort(array);
+ }
+ public boolean isEmpty(){
+ return array.isEmpty();
+ }
+ public int getFirst(){
+ return array.get(0);
+ }
+ public int getLast(){
+ return array.get(array.size()-1);
+ }
+}
+public class qn69{
+ public static void main(String arg[]){
+ String data = null ;
+ Scanner sc = new Scanner (System.in);
+ data=sc.nextLine();
+ try{
+ File fi = new File(data.trim());
+ FileReader fr = new FileReader(fi);
+ BufferedReader dip = new BufferedReader(fr);
+ String i;
+ SortedList sl = new SortedList();
+ while((i=dip.readLine())!=null){
+ sl.add(Integer.parseInt(i)); 
+ }
+ if(sl.isEmpty()){
+ System.out.println(" Empty array");
+ System.out.println("min undefined");
+ System.out.println("max undefined");
+ } 
+ else{
+ System.out.println(" min = "+ sl.getFirst());
+System.out.println("max = "+ sl.getLast());
+ }
+ fr.close();
+ }
+ catch(Exception e){
+ System.out.println(e);
+ }
+ }
+}
