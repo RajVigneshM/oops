@@ -1,0 +1,66 @@
+11. Assume there are N persons and each person needs exactly one cab. For each person, you are 
+given the start time and end time (both inclusive) during which that person will travel. Find the 
+minimum number of cabs required.
+Input Format
+First line contains an integer, N(1,<=N<=10^5) denoting the number of persons. Next N lines 
+contains 4 integersHH1,MM1,HH2,and MM2, (0<=HH1,HH2<=23) (0<=MM1,MM2<=59), denoting 
+the start time (HH1:MM1) and end time (HH2:MM2). It is guaranteed that start and end time will not 
+span midnight.
+Output Format
+Print the minimum number of cabs required.
+Sample 1 Input
+Sample 1 Output
+6
+1 0 2 0
+16 0 21 30
+9 30 13 0
+21 30 22 30
+21 30 22 30
+12 0 12 30
+3
+Code:
+import java.util.*;
+public class qn11 {
+ public static int count=1;
+ public boolean check(ArrayList<Integer> a1 ,ArrayList<Integer> a2 ){
+ int A1=a1.get(0)*100+a1.get(1);
+ int A2=a1.get(2)*100+a1.get(3);
+ int B1=a2.get(0)*100+a2.get(1);
+ int B2=a2.get(2)*100+a2.get(3);
+ if((B1>=A1) && (B1<A2) ){
+ return true;
+ }
+ else if((A1>=B1)&&(A1<B2)){
+ return true;
+ }
+ else{
+ return false;
+ }
+ 
+ }
+ public static void main(String arg[]){
+ qn11 obj = new qn11();
+ Scanner in = new Scanner(System.in);
+ int num=in.nextInt();
+ ArrayList<ArrayList> list = new ArrayList<>();
+ for(int i=0 ; i<num;i++){
+ ArrayList<Integer> numal = new ArrayList<>();
+ int k;
+ for(int j=0 ;j<4;j++){
+ k=in.nextInt();
+ numal.add(k);
+ }
+ if(list.size()!=0){
+ for(ArrayList l :list){
+ if(obj.check(l, numal)){
+ qn11.count++;
+ }
+ }
+ }
+ list.add(numal);
+ }
+ System.out.println(qn11.count);
+ }
+ 
+}
+
