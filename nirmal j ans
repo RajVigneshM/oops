@@ -1,0 +1,171 @@
+38.. St. Patrick Convent organizes a project exhibition "Innovative Minds" every year with an 
+objective to provide the platform and unleash the potential of the students by showcasing their 
+innovative projects. 
+Albert is a science expert and is a topper at his high school. He became interested about the project 
+exhibition and enrolled his name for the same. 
+Albert’s Dad has a cell phone but often seemed to worry about the price plans for his phone that 
+best fits for his usage pattern and monthly expenses. 
+There are two options, each plan has different costs for daytime minutes, evening minutes and 
+weekend minutes 
+Having this as a spark for his project, Albert decided to design a handy application that will input the 
+number of each type of minutes and output the cheapest plan for this usage pattern, using the 
+format shown below. In the case that the two plans are the same price, output both plans. 
+He needs your help to evaluate his project and suggest corrections. 
+Hence create a class named BestMobilePlan with the following method. 
+Create a driver class called Main. In the Main method, obtain input from the user in the console and 
+call the printPlanDetails method present in BestMobilePlan class. 
+Input Format 
+Input consists of the usage during daytime,evening and night time separated by a space. 
+Output Format 
+Output should print the cheapest plan for this usage pattern. In the case that the two plans are the 
+same price, output both plans. 
+Sample Input 
+251 10 60 
+Sample Output 
+Plan A costs 51.25 
+Plan B costs 18.95 
+Plan B is cheapest 
+Sample Input 
+162 61 66 
+Sample Output 
+Plan A costs 37.85 
+Plan B costs 37.85 
+Plan A and B are the same price
+Code:
+import java.util.*;
+class BestMobilePlan{
+ int day,eve,night;
+ BestMobilePlan(){};
+ BestMobilePlan(int a,int b,int c){
+ this.day=a;
+ this.eve=b;
+ this.night=c;
+ }
+ private double plan_A(){
+ double sum=0;
+ if(day>100){
+ sum+=(day-100)*25;
+ }
+ sum+=eve*15;
+ sum+=night*20;
+ return sum/100;
+ }
+ private double plan_B(){
+ double sum=0;
+ if(day>250){
+ sum+=(day-250)*45;
+ }
+ sum+=eve*35;
+ sum+=night*25;
+ return sum/100;
+ }
+ void printPlanDetails(){
+ double A=plan_A();
+ double B=plan_B();
+ System.out.printf("Plan A costs %.2f \n",A);
+ System.out.printf("Plan B costs %.2f \n",B);
+ if(A>B){
+ System.out.println("Plan B is cheapest"); 
+ }
+ else if(A==B){
+ System.out.println("Plan A and B are the same price");
+ }
+ else{
+ System.out.println("Plan B is cheapest");
+ }
+ }
+}
+class qn38 extends BestMobilePlan{
+ qn38(int a,int b,int c){
+ super(a,b,c);
+ }
+ public static void main (String arg[]){
+ int a,b,c;
+ Scanner in = new Scanner(System.in);
+ a=in.nextInt();
+ b=in.nextInt();
+ c=in.nextInt();
+ qn38 obj = new qn38(a,b,c);
+ obj.printPlanDetails();
+ }
+}
+
+
+56. Create a new class called “City” that can be used to keep track of location information for a 
+given city. Your class should include the following 
+1. String name 
+2. double lon (for longitude) 
+3. double lat (for latitude) 
+4. A constructor that accepts a name, lon and lat value and stores them in the instance 
+variables for the object 
+5. A method that reports the current position of a city. Here’s a method header to get you 
+started: 
+public void report() 
+6. A method that computes the distance from the lon and lat of one city to the lon and lat of 
+another city. Use the standard distance formula to compute this value. Here’s a method 
+header to get you started: 
+public double distanceFrom(lon1, lat1, lon2, lat2) 
+Create a new class called “Ex1_2”. Do the following in this class: 
+1. Include the “main” function 
+2. Create two objects for the two cities with name, longitude and latitude values 
+3. Calculate the distance between these two cities 
+Sample Output: 
+City #1 Name: NYC Longitude: 50 Latitude: 75 
+City #2 Name: Chicago Longitude: 25 Latitude: 10 
+City: NYC is at: 50.0, 75.0 
+City: Chicago is at: 25.0, 10.0 
+NYC is 7394 kms away from Chicago
+Code:
+class City{
+ String name;
+ double lon;
+ double lat;
+ City(String n,double lo , double la){
+ name=n;
+ lon = lo;
+ lat = la;
+ }
+ public void report(){
+ System.out.println("City: "+name+" is at: "+lon+", "+lat);
+ }
+ public double distanceFrom(double lon1 , double lat1 , double lon2 
+, double lat2){
+ long R=6371L;
+ double r1= Math.toRadians(lat1);
+ double r2= Math.toRadians(lat2);
+ double dla = Math.toRadians(lat2-lat1);
+ double dlo = Math.toRadians(lon2-lon1);
+ double a = 
+ 
+Math.sin(dla/2)*Math.sin(dla/2)+Math.sin(dlo/2)*Math.sin(dlo/2)*Math.co
+s(r1)*Math.cos(r2);
+ double c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+ double d = R*c;
+ return d;
+ }
+}
+class qn56{
+ public static void main(String args[]){
+ City ob1= new City("NYC",50.0,75.0);
+ City ob2 = new City("Chicago",25.0,10.0);
+ System.out.println("City#1");
+ System.out.println("Name: "+ob1.name);
+ System.out.println("Longitude: "+(int)ob1.lon);
+ System.out.println("Latitude: "+(int)ob1.lat);
+ System.out.println();
+ System.out.println("City#2");
+ System.out.println("Name: "+ob2.name);
+ System.out.println("Longitude: "+(int)ob2.lon);
+ System.out.println("Latitude: "+(int)ob2.lat);
+ System.out.println();
+ ob1.report();
+ System.out.println();
+ ob2.report();
+ System.out.println();
+ int 
+distance=(int)ob2.distanceFrom(ob1.lon,ob1.lat,ob2.lon,ob2.lat);
+ System.out.println(ob1.name+" is "+distance+" kms away from 
+"+ob2.name);
+ 
+ }
+}
